@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mrf-extractable" content="false">
+    <title>Razón de feminidad en 2021 a nivel municipal en España</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="./css/main.css" rel="stylesheet">
+</head>
+<body>
+    <section class="container">
+        <h2 class="title">Figura 2. Razón de feminidad en 2021 a nivel municipal en España</h2>
+        <h3 class="subtitle">Razón de mujeres por cada 100 hombres</h3>
+        <div class="legend">
+            <span class="legend__gradient"></span>
+            <div class="text">
+                <span>0</span>
+                <span>100</span>
+                <span>200</span>
+            </div>
+        </div>
+        <div class="b-map">
+            <div class="loading style">
+                <div class="loading-wheel"></div>
+            </div> 
+            <div id="map"></div>
+        </div>
+        <div class="note">
+            <span>Puede situar el ratón (o pulsar, en caso de utilizar un dispositivo táctil) encima de los círculos para obtener información adicional.</span>
+        </div>       
+        <div class="source">
+            <span>Fuente: INE</span>
+        </div>
+        <div class="chart__tooltip" id="tooltip"></div>
+    </section>
+    <!-- Script base de D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Script para trabajar con archivos topoJson, geoJson y shapefiles -->
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <!-- Script que ofrece numerosas posibilidades de proyecciones geográficas (satellite o robinson, p.e.) -->
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <!-- Script que modifica las proyecciones y acerca territorios alejados del territorio 'principal' (Península y Canarias, p.e.) -->
+    <script src="https://unpkg.com/d3-composite-projections@1.2.0"></script>
+    <script src="./js/main_razon.js"></script>
+</body>
+</html>
