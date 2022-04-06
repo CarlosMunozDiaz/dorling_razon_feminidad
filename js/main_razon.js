@@ -5,7 +5,7 @@ let tooltip = d3.select('#tooltip');
 initMap();
 
 function initMap() {
-    d3.json('../data/municipios_razon21_geo.json', function(error,data) {
+    d3.json('https://raw.githubusercontent.com/CarlosMunozDiaz/dorling_razon_feminidad/main/data/municipios_razon21_geo.json', function(error,data) {
         if (error) throw error;
         let us = topojson.feature(data, data.objects.muni);
         
