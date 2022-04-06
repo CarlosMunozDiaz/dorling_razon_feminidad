@@ -1,5 +1,6 @@
 let width = document.getElementById('map').clientWidth;
 let height = 600;
+let tooltip = d3.select('#tooltip');
 
 initMap();
 
@@ -28,11 +29,18 @@ function initMap() {
         ///Prueba dorling
         let spreadMunicipios = applyForce(us.features);
 
+
+        ///////////
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('loading').style.animationPlayState = 'paused';
+        ///////////
+
         svg.append("g")
             .selectAll("circle")
             .data(spreadMunicipios)
             .enter()
             .append("circle")
+            .attr('class','circles')
             .attr("fill", function(d) {
                 if(d.properties.razon_fem != undefined) {
                     if(d.properties.razon_fem <= 33.33) {
@@ -60,7 +68,29 @@ function initMap() {
                 return d.properties.radius;
             })
             .style("stroke", "white")
-            .style("stroke-width", ".3px");
+            .style("stroke-width", ".3px")
+            .on('mouseover', function(d,i,e) {
+                this.style.stroke = '#000';
+                this.style.strokeWidth = '0.8px';
+
+                //Texto
+                let html = `<p class="chart__tooltip--title">${d.properties.NAMEUNIT}</p>
+                <p class="chart__tooltip--text">Razón de feminidad: ${numberWithCommas(d.properties.razon_fem.toFixed(2))} mujeres por cada 100 hombres </p>`;
+
+                tooltip.html(html);
+
+                //Tooltip
+                positionTooltip(window.event, tooltip);
+                getInTooltip(tooltip);
+
+            })
+            .on('mouseout', function() {
+                this.style.stroke = 'white';
+                this.style.strokeWidth = '0.3px';
+
+                //Quitamos el tooltip
+                getOutTooltip(tooltip);
+            });
 
         function applyForce (nodes) {
             const simulation = d3.forceSimulation(nodes)
@@ -94,4 +124,37 @@ function initMap() {
             return radio(pobl);
         }
     });
+}
+
+/*
+* FUNCIONES TOOLTIP
+*/
+function getInTooltip(tooltip) {
+    tooltip.style('display','block').style('opacity', 1);
+}
+
+function getOutTooltip(tooltip) {
+    tooltip.style('display','none').style('opacity', 0);
+}
+
+function positionTooltip(event, tooltip) {
+    let x = event.pageX;
+    let y = event.pageY;
+
+    //Tamaño    
+    let distanciaAncho = 135;
+
+    //Posición
+    let left = window.innerWidth / 2 > x ? 'left' : 'right';
+    let mobile = window.innerWidth < 525 ? -30 : -15;
+    let horizontalPos = left == 'left' ? 30 : - distanciaAncho + mobile;
+
+    tooltip.style('top', (y - 10) + 'px');
+    tooltip.style('left', (x + horizontalPos) + 'px');
+}
+
+/* Helpers */
+function numberWithCommas(x) {
+    //return x.toString().replace(/\./g, ',').replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    return x.toString().replace(/\./g, ',');
 }

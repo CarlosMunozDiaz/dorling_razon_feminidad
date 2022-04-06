@@ -53,13 +53,49 @@ body {
 
 /* Mapa */
 
-#map {
-    width:100%;
-    max-width: 768px;
-    height: 600px;
-    margin-top: 16px;
-    margin: auto;
+.b-map {
+    position: relative;
+
+    .lds-dual-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        width: 80px;
+        height: 80px;
+    }
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #000;
+        border-color: #000 transparent #000 transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+    #map {
+        width:100%;
+        max-width: 768px;
+        height: 600px;
+        margin-top: 16px;
+        margin: auto;
+    }
 }
+
+@keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
 
 /* Cambio de estilos para mapa */
 .mapboxgl-ctrl-geocoder--input {
